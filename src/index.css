@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  color-scheme: light;
+}
+:root.dark {
+  color-scheme: dark;
+}
+body {
+  margin: 0;
+  background: #f8fafc;
+}
+:root.dark body {
+  background: #020617;
+}
+
+/* Sequence arrow "drawing" animation */
+@keyframes seq-draw {
+  from { transform: translateY(-50%) scaleX(0); }
+  to { transform: translateY(-50%) scaleX(1); }
+}
+.seq-draw-r { transform-origin: left center; animation: seq-draw 0.7s ease-out both; }
+.seq-draw-l { transform-origin: right center; animation: seq-draw 0.7s ease-out both; }
+
+/* Packet header pop-in */
+@keyframes pkt-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.95); }
+  to { opacity: 1; transform: none; }
+}
+.pkt-in { animation: pkt-in 0.35s ease-out both; }
+
+@keyframes flip-in {
+  from { opacity: 0; transform: rotateY(90deg); }
+  to { opacity: 1; transform: rotateY(0); }
+}
+.flip-in { animation: flip-in 0.3s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .seq-draw-r, .seq-draw-l, .pkt-in, .flip-in { animation: none; }
+}
