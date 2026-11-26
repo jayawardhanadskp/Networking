@@ -1,6 +1,6 @@
 # NSB IT Interview Prep
 
-A study app for the **Junior Executive (IT) – Grade IV** interview (Administrator / Programmer / Analyst posts).
+A study app for the **Junior Executive (Administrator – System Integration) – Grade IV** interview at NSB (Sun 29 Nov, 10:20 a.m.).
 Vite + React + TypeScript + Tailwind. Works offline after loading; progress is saved in your browser (localStorage).
 
 ## Run it
@@ -27,7 +27,8 @@ npm run preview   # serve the production build (also on your network)
 - **Quiz** per module with explanations; **Weak areas** collects what you got wrong
 - **Flashcards** with "know it / review again"
 - **Interview Q&A bank** (💬) with hide/show answers and tips; **write and save your own version** of any answer
-- **Mock interview** (🎤): random questions, 2-minute timer, reveal, rate yourself 1–5
+- **Role module first** (🔗 System Integration): core banking interfaces, REST/SOAP, ESB, message queues, ISO 8583/20022, reliability, mTLS/OAuth2, SIT/UAT, troubleshooting
+- **Mock interview** (🎤): 60% role-module questions + 40% from the other modules and HR, 2-minute timer, reveal, rate yourself 1–5
 - **Search** (🔍) across lessons, quizzes, flashcards and answers
 - Dark / light / system theme
 
@@ -39,6 +40,7 @@ src/
     index.ts                ← module registry
     types.ts                ← content model (Section, MCQ, Flashcard, InterviewQA, visual specs)
     plan.ts                 ← interview date + study plan
+    00-system-integration/  ← ROLE module (priority: true → shown first, 60% of mock questions)
     01-networking/          ← one folder per module
       index.ts              ← module metadata
       lessons.ts            ← sections (text, visuals, bank example, remember, quick checks)
@@ -50,7 +52,7 @@ src/
     visuals/                ← data-driven diagram engines: Sequence, Flow, Topology, Compare, Fields
     custom/                 ← hand-built interactive visuals
   pages/                    ← Dashboard, Lesson, Quiz, Flashcards, Subnet, Interview, Mock, Weak, Search
-  lib/                      ← subnet math (+ tests), progress storage, router, theme
+  lib/                      ← subnet math, mock-interview picker (+ tests), progress storage, router, theme
 ```
 
 ## Add a new module (e.g. your confirmed role)
