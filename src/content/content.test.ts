@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { modules } from './index';
 import type { MCQ, VisualSpec } from './types';
 import { customVisualIds } from './visualIds';
+import { roleModuleId } from './plan';
+import { mtiDigits, mtiExamples } from './visual-data/integrationData';
 
 function checkMcq(q: MCQ, where: string) {
   expect(q.options.length, `${where}: needs 2+ options`).toBeGreaterThanOrEqual(2);
@@ -76,10 +78,65 @@ describe('content integrity', () => {
     });
   }
 
-  it('Modules 1–6 have at least 15 quiz questions and 15 flashcards', () => {
-    for (const m of modules.slice(0, 6)) {
+  it('Core networking modules have at least 15 quiz questions and 15 flashcards', () => {
+    const ids = ['networking', 'ip-subnetting', 'switching-routing', 'wan', 'network-security', 'troubleshooting'];
+    for (const m of modules.filter((x) => ids.includes(x.id))) {
       expect(m.quiz.length, `${m.id} quiz`).toBeGreaterThanOrEqual(15);
       expect(m.flashcards.length, `${m.id} flashcards`).toBeGreaterThanOrEqual(15);
     }
+  });
+
+  describe('role module (System Integration)', () => {
+    const role = modules.find((m) => m.id === roleModuleId)!;
+
+    it('exists, is first and is marked priority', () => {
+      expect(role).toBeDefined();
+      expect(modules[0].id).toBe(roleModuleId);
+      expect(role.priority).toBe(true);
+    });
+
+    it('has 8 sections, 30 quiz questions, 25 flashcards and 25 interview questions', () => {
+      expect(role.sections.length).toBe(8);
+      expect(role.quiz.length).toBe(30);
+      expect(role.flashcards.length).toBe(25);
+      expect(role.interview.length).toBe(25);
+    });
+
+    it('includes the required scenario questions', () => {
+      const qs = role.interview.map((x) => x.q.toLowerCase());
+      for (const needle of [
+        'mobile banking cannot reach core banking',
+        'debited the customer but no cash',
+        'new bill payment partner',
+        'same transfer request is sent twice',
+        'message queue instead of a direct api call',
+        'stopped working at midnight',
+      ]) {
+        expect(qs.some((q) => q.includes(needle)), needle).toBe(true);
+      }
+    });
+
+    it('uses only correct ISO 8583 MTI pairings in the MTI decoder data', () => {
+      const names = Object.fromEntries(mtiExamples.map((x) => [x.mti, x.name.toLowerCase()]));
+      expect(names['0100']).toContain('authorisation request');
+      expect(names['0110']).toContain('authorisation response');
+      expect(names['0200']).toContain('financial request');
+      expect(names['0210']).toContain('financial response');
+      expect(names['0400']).toContain('reversal request');
+      expect(names['0420']).toContain('reversal advice');
+      expect(names['0430']).toContain('reversal advice response');
+      expect(names['0800']).toContain('network management request');
+      // Every example decodes with the digit tables: class digit 2 and function digit 3 must exist.
+      for (const { mti } of mtiExamples) {
+        expect(mtiDigits[1].values[mti[1]], mti).toBeDefined();
+        expect(mtiDigits[2].values[mti[2]], mti).toBeDefined();
+        expect(mtiDigits[3].values[mti[3]], mti).toBeDefined();
+      }
+    });
+  });
+
+  it('HR module has the "Why are you suited to this role" answer', () => {
+    const hr = modules.find((m) => m.id === 'hr')!;
+    expect(hr.interview.some((x) => /why are you suited to this role/i.test(x.q))).toBe(true);
   });
 });

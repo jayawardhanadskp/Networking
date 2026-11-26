@@ -48,6 +48,26 @@ To be honest, networking is the area where I'm still growing, so I have been act
   },
   {
     type: 'hr',
+    q: 'Why are you suited to this role (Administrator – System Integration)?',
+    answer: `Because integration is what I have been doing **from the application side** for about three years — connecting systems so they exchange data **reliably and securely**.
+
+- **APIs:** I design and build **REST APIs with Spring Boot** that mobile and web apps call — so I understand request/response formats, HTTP status codes, timeouts, validation and API documentation from both sides of an interface.
+- **Security:** I implemented **JWT-based authentication**, so I already work with tokens, expiry, signatures and access control — the same ideas as OAuth2 and API gateway security in a bank.
+- **Third-party integrations:** I integrated **Firebase** (authentication, push notifications) and **AI services** through their APIs — handling API keys, rate limits, errors and retries, and working from the provider's documentation. That is exactly how you onboard an external partner.
+- **Production releases:** I deploy to production through **CI/CD** and support live systems — checking logs, finding where a request failed and fixing it carefully. In a bank that becomes change management, monitoring and incident handling.
+- **Reliability:** I'm a **Redis Certified Associate Developer (Java)**. I've used Redis for caching and fast lookups — for example to avoid processing the same request twice — which connects directly to idempotency and performance in payment integrations.
+
+What I'm adding now is the **banking and infrastructure side**: message standards like **ISO 8583 and ISO 20022**, middleware and message queues, mutual TLS and certificates, SIT/UAT and the bank's change process. I've been studying these seriously, and I'm confident I can learn the bank's specific systems quickly and become a reliable member of the integration team.
+
+[Optional real example: "For example, at [Company] I integrated [service] — [one sentence on the problem and result]."]`,
+    tips: [
+      'Structure: "I already do X from the app side → here is the proof → here is what I am adding."',
+      'Pick ONE real integration story and say it in two sentences — numbers help.',
+      'Do not claim experience with ISO 8583, MQ or ESB products you have not used; say you have studied them.',
+    ],
+  },
+  {
+    type: 'hr',
     q: 'Why do you want to work for a state bank / for this bank?',
     answer: `I have three main reasons.
 

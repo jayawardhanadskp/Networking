@@ -154,6 +154,8 @@ export interface Module {
   short: string;
   emoji: string;
   tone: Tone;
+  /** Shown first and badged "Top priority" on the dashboard (the confirmed role module). */
+  priority?: boolean;
   sections: Section[];
   quiz: MCQ[];
   flashcards: Flashcard[];

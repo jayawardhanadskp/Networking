@@ -10,6 +10,7 @@
 import type { InterviewQA, MCQ, Module } from './types';
 import { hashId } from '../lib/random';
 
+import systemIntegration from './00-system-integration';
 import networking from './01-networking';
 import ipSubnetting from './02-ip-subnetting';
 import switchingRouting from './03-switching-routing';
@@ -25,6 +26,7 @@ import java from './12-java';
 import hr from './13-hr';
 
 const rawModules: Module[] = [
+  systemIntegration, // role module — top priority, shown first
   networking,
   ipSubnetting,
   switchingRouting,
