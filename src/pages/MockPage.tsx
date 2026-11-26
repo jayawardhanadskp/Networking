@@ -1,26 +1,16 @@
 import { useEffect, useState } from 'react';
 import { allInterview, type InterviewRef } from '../content';
 import { useProgress } from '../lib/progress';
-import { shuffle } from '../lib/random';
+import { pickMock, ROLE_SHARE, type MockMix } from '../lib/mock';
+import { roleModuleId } from '../content/plan';
 import { inline } from '../components/Md';
 import { AnswerBlock } from '../components/AnswerBlock';
 import { Btn, Card, PageHeader } from '../components/ui';
 
 const SECONDS = 120;
 
-type Mix = 'mixed' | 'technical' | 'hr';
-
-function pick(count: number, mix: Mix): InterviewRef[] {
-  const tech = allInterview.filter((x) => x.qa.type !== 'hr');
-  const hr = allInterview.filter((x) => x.qa.type === 'hr');
-  if (mix === 'technical') return shuffle(tech).slice(0, count);
-  if (mix === 'hr') return shuffle(hr).slice(0, count);
-  // Mixed: like a real panel — about 1 in 4 HR, always start with "tell me about yourself" if available.
-  const nHr = Math.max(1, Math.round(count / 4));
-  const intro = hr.find((x) => /tell me about yourself/i.test(x.qa.q));
-  const hrPick = shuffle(hr.filter((x) => x !== intro)).slice(0, intro ? nHr - 1 : nHr);
-  const techPick = shuffle(tech).slice(0, count - hrPick.length - (intro ? 1 : 0));
-  return [...(intro ? [intro] : []), ...shuffle([...techPick, ...hrPick])];
+function pick(count: number, mix: MockMix): InterviewRef[] {
+  return pickMock(allInterview, count, mix, roleModuleId);
 }
 
 export function MockPage() {
@@ -32,7 +22,7 @@ export function MockPage() {
   const [running, setRunning] = useState(false);
   const [scores, setScores] = useState<Record<string, number>>({});
   const [count, setCount] = useState(8);
-  const [mix, setMix] = useState<Mix>('mixed');
+  const [mix, setMix] = useState<MockMix>('mixed');
 
   useEffect(() => {
     if (!running) return;
@@ -65,7 +55,7 @@ export function MockPage() {
   if (!session) {
     return (
       <div className="space-y-3">
-        <PageHeader title="🎤 Mock interview" sub="Random questions from all modules + HR. Answer OUT LOUD (2 minutes each), then reveal the model answer and rate yourself honestly." />
+        <PageHeader title="🎤 Mock interview" sub={`${Math.round(ROLE_SHARE * 100)}% of questions come from your role module (System Integration), ${100 - Math.round(ROLE_SHARE * 100)}% from the other modules + HR. Answer OUT LOUD (2 minutes each), then reveal the model answer and rate yourself honestly.`} />
         <Card className="space-y-4">
           <div>
             <div className="mb-1.5 text-[13px] font-semibold">Number of questions</div>
