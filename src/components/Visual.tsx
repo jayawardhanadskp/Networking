@@ -27,6 +27,14 @@ const customTitle: Record<CustomVisualId, string> = {
   drSites: 'Hot vs warm vs cold DR sites',
   rpoRto: 'RPO and RTO on a timeline',
   portGrid: 'Port memory grid — tap to flip',
+  integrationMap: 'Core banking and the systems it connects to — tap each one',
+  p2pHub: 'Point-to-point vs hub (ESB): count the connections',
+  messageQueue: 'Message queue: producer → queue → consumer (+ dead letter queue)',
+  mtiDecoder: 'ISO 8583 MTI decoder — tap a message type',
+  idempotency: 'The same transfer sent twice: with and without an idempotency key',
+  reconciliation: 'Reconciliation: matching two systems\' records',
+  tlsHandshake: 'TLS vs mutual TLS handshake',
+  integrationTroubleshoot: 'Integration troubleshooting ladder (with commands)',
 };
 
 export function Visual({ spec }: { spec: VisualSpec }) {

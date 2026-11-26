@@ -11,4 +11,12 @@ export const customVisualIds = [
   'drSites',
   'rpoRto',
   'portGrid',
+  'integrationMap',
+  'p2pHub',
+  'messageQueue',
+  'mtiDecoder',
+  'idempotency',
+  'reconciliation',
+  'tlsHandshake',
+  'integrationTroubleshoot',
 ] as const;
