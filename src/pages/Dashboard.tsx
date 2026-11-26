@@ -43,7 +43,7 @@ export function Dashboard() {
         <div className="mt-3 flex items-end justify-between">
           <div>
             <div className="text-4xl font-black">{d}</div>
-            <div className="text-[12px] opacity-90">{d === 1 ? 'day' : 'days'} to the interview (Sun 29 Nov)</div>
+            <div className="text-[12px] opacity-90">{d === 1 ? 'day' : 'days'} to the interview ({interview.when})</div>
           </div>
           <div className="text-right">
             <div className="text-3xl font-black">{overall}%</div>
@@ -82,7 +82,10 @@ export function Dashboard() {
         <h2 className="mb-2 text-[13px] font-bold tracking-wide text-slate-500 uppercase">Modules</h2>
         <div className="space-y-2">
           {stats.map(({ m, s }, i) => (
-            <Link key={m.id} to={`/m/${m.id}`} className="block rounded-2xl border border-slate-200 bg-white p-3 shadow-sm active:scale-[0.99] dark:border-slate-700/80 dark:bg-slate-900/60">
+            <Link key={m.id} to={`/m/${m.id}`} className={`block rounded-2xl border bg-white p-3 shadow-sm active:scale-[0.99] dark:bg-slate-900/60 ${m.priority ? 'border-violet-400 ring-2 ring-violet-200 dark:border-violet-500/70 dark:ring-violet-500/20' : 'border-slate-200 dark:border-slate-700/80'}`}>
+              {m.priority && (
+                <div className="mb-2 inline-block rounded-full bg-violet-600 px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-white uppercase">⭐ Top priority · your role</div>
+              )}
               <div className="flex items-center gap-3">
                 <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl ${toneSolid[m.tone]}`}>{m.emoji}</div>
                 <div className="min-w-0 flex-1">
